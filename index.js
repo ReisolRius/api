@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const app = express();
-const port = 3001;
+const port = 3003;
 const API_KEY = '011ba11bdcad4fa396660c2ec447ef14';
 
 app.use(cors());
