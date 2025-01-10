@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 const options = {
     key: fs.readFileSync('/etc/ssl/private/server.key'),
-    cert: fs.readFileSync('..//etc/ssl/certs/server.cert')
+    cert: fs.readFileSync('../..//etc/ssl/certs/server.cert')
 };
 
 // Проверка апи ключа
