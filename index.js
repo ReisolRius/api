@@ -8,7 +8,13 @@ const app = express();
 const PORT = 3003;
 const API_KEY = '011ba11bdcad4fa396660c2ec447ef14';
 
-app.use(cors());
+// Настройка CORS для GitHub Pages
+app.use(cors({
+    origin: ['https://<your-github-username>.github.io', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'x-api-key']
+}));
+
 app.use(bodyParser.json());
 
 const options = {
@@ -97,6 +103,13 @@ app.post('/api/orders', checkApiKey, (req, res) => {
         res.status(500).json({ error: 'Внутренняя ошибка сервера' });
     }
 });
+
+// Редирект с HTTP на HTTPS
+const http = require('http');
+http.createServer((req, res) => {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
 
 https.createServer(options, app).listen(PORT, () => {
     console.log(`Server is running at https://your_ip_address:${PORT}`);
