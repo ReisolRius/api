@@ -1,3 +1,4 @@
+const https = require('https');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -9,6 +10,11 @@ const API_KEY = '011ba11bdcad4fa396660c2ec447ef14';
 
 app.use(cors());
 app.use(bodyParser.json());
+
+const options = {
+    key: fs.readFileSync('/etc/ssl/private/server.key'),
+    cert: fs.readFileSync('../etc/ssl/certs/server.cert')
+};
 
 // Проверка апи ключа
 const checkApiKey = (req, res, next) => {
@@ -92,6 +98,6 @@ app.post('/api/orders', checkApiKey, (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Сервер запущен на порту ${port}`);
+https.createServer(options, app).listen(PORT, () => {
+    console.log(`Server is running at https://your_ip_address:${PORT}`);
 });
